@@ -20,7 +20,7 @@ all: librelane ## Build the project (runs LibreLane)
 
 clone-pdk: ## Clone the IHP-Open-PDK repository
 	rm -rf $(MAKEFILE_DIR)/IHP-Open-PDK
-	git clone https://github.com/mole99/IHP-Open-PDK.git --single-branch -b update-librelane $(MAKEFILE_DIR)/IHP-Open-PDK --depth 1 --recurse-submodules --shallow-submodules
+	git clone https://github.com/IHP-GmbH/IHP-Open-PDK.git --single-branch -b dev $(MAKEFILE_DIR)/IHP-Open-PDK --depth 1 --recurse-submodules --shallow-submodules
 .PHONY: clone-pdk
 
 librelane: ## Run LibreLane flow (synthesis, PnR, verification)
