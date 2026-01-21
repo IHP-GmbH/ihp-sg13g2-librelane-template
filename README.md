@@ -4,15 +4,13 @@ A LibreLane template to implement a full chip design using the ihp-sg13g2 PDK.
 
 ## Prerequisites
 
-Until all changes are upstreamed, this template uses a fork of the [ihp-sg13g2 PDK](https://github.com/mole99/IHP-Open-PDK).
-
 To clone the latest PDK version, simply run `make clone-pdk`.
 
 In the next step, install LibreLane by following the Nix-based installation instructions: https://librelane.readthedocs.io/en/latest/installation/nix_installation/index.html
 
 ## Implement the Design
 
-This repository contains a Nix flake that provides a shell with the [`leo/ihp-sg13g2`](https://github.com/librelane/librelane/tree/leo/ihp-sg13g2) branch of LibreLane.
+This repository contains a Nix flake that provides a shell with the [`dev`](https://github.com/librelane/librelane/tree/dev) branch of LibreLane.
 
 Simply run `nix-shell` in the root of this repository.
 

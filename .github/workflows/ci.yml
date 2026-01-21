@@ -57,23 +57,33 @@ jobs:
           sudo tree /nix/store/*-librelane || true
       - name: Clone the PDK
         run: |
-          make clone-pdk
+          nix develop --command make clone-pdk
       - name: Run RTL simulation
-        uses: workflow/nix-shell-action@v3.4.0
-        with:
-          flakes-from-devshell: true
-          script: |
-            make sim
+        run: |
+          nix develop --command make sim
+          # cocotb also returns 0 upon failure
+          # check the simulation results
+          ! grep failure cocotb/sim_build/results.xml
       - name: Implement the Chip
-        uses: workflow/nix-shell-action@v3.4.0
+        if: success() || failure()
+        run: |
+          nix develop --command make librelane-nodrc
+          make copy-final
+      - name: Create summary
+        if: success() || failure()
+        run: |
+          echo "# Manufacturability" >> $GITHUB_STEP_SUMMARY
+          cat librelane/runs/*/*-misc-reportmanufacturability/manufacturability.rpt >> $GITHUB_STEP_SUMMARY
+      - name: Upload GDS
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
         with:
-          flakes-from-devshell: true
-          script: |
-            make librelane-nodrc
-            make copy-final
+          name: final_gds
+          path: final/gds/*
       - name: Run GL simulation
-        uses: workflow/nix-shell-action@v3.4.0
-        with:
-          flakes-from-devshell: true
-          script: |
-            make sim-gl
+        if: success() || failure()
+        run: |
+          nix develop --command make sim-gl
+          # cocotb also returns 0 upon failure
+          # check the simulation results
+          ! grep failure cocotb/sim_build/results.xml
