@@ -5,8 +5,12 @@ TOP = chip_top
 
 PDK_ROOT ?= $(MAKEFILE_DIR)/IHP-Open-PDK
 PDK ?= ihp-sg13g2
+PDK_COMMIT ?= c4b8b4e5e7a05f375cca3815d51b3a37721fbf5c
 
 .DEFAULT_GOAL := help
+
+$(PDK_ROOT)/$(PDK):
+	ciel enable $(PDK_COMMIT) --pdk-root $(PDK_ROOT) --pdk-family $(PDK)
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'
@@ -15,27 +19,25 @@ help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
 .PHONY: help
 
+clone-pdk: $(PDK_ROOT)/$(PDK) ## Clone the IHP-Open-PDK repository
+.PHONY: clone-pdk
+
 all: librelane ## Build the project (runs LibreLane)
 .PHONY: all
 
-clone-pdk: ## Clone the IHP-Open-PDK repository
-	rm -rf $(MAKEFILE_DIR)/IHP-Open-PDK
-	git clone https://github.com/IHP-GmbH/IHP-Open-PDK.git --single-branch -b dev $(MAKEFILE_DIR)/IHP-Open-PDK --depth 1 --recurse-submodules --shallow-submodules
-.PHONY: clone-pdk
-
-librelane: ## Run LibreLane flow (synthesis, PnR, verification)
+librelane: $(PDK_ROOT)/$(PDK) ## Run LibreLane flow (synthesis, PnR, verification)
 	librelane librelane/config.yaml --pdk ${PDK} --pdk-root ${PDK_ROOT} --manual-pdk
 .PHONY: librelane
 
-librelane-nodrc: ## Run LibreLane flow without DRC checks
+librelane-nodrc: $(PDK_ROOT)/$(PDK) ## Run LibreLane flow without DRC checks
 	librelane librelane/config.yaml --pdk ${PDK} --pdk-root ${PDK_ROOT} --manual-pdk --skip KLayout.DRC --skip Magic.DRC
 .PHONY: librelane-nodrc
 
-librelane-openroad: ## Open the last run in OpenROAD
+librelane-openroad: $(PDK_ROOT)/$(PDK) ## Open the last run in OpenROAD
 	librelane librelane/config.yaml --pdk ${PDK} --pdk-root ${PDK_ROOT} --manual-pdk --last-run --flow OpenInOpenROAD
 .PHONY: librelane-openroad
 
-librelane-klayout: ## Open the last run in KLayout
+librelane-klayout: $(PDK_ROOT)/$(PDK) ## Open the last run in KLayout
 	librelane librelane/config.yaml --pdk ${PDK} --pdk-root ${PDK_ROOT} --manual-pdk --last-run --flow OpenInKLayout
 .PHONY: librelane-klayout
 
@@ -43,7 +45,7 @@ sim: ## Run RTL simulation with cocotb
 	cd cocotb; PDK_ROOT=${PDK_ROOT} PDK=${PDK} python3 chip_top_tb.py
 .PHONY: sim
 
-sim-gl: ## Run gate-level simulation with cocotb
+sim-gl: $(PDK_ROOT)/$(PDK) ## Run gate-level simulation with cocotb
 	cd cocotb; GL=1 PDK_ROOT=${PDK_ROOT} PDK=${PDK} python3 chip_top_tb.py
 .PHONY: sim-gl
 
