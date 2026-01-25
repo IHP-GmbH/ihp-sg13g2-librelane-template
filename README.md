@@ -2,6 +2,8 @@
 
 A LibreLane template to implement a full chip design using the ihp-sg13g2 PDK.
 
+![IHP template render in OpenROAD GUI](ihp_chip.png)
+
 ## Prerequisites
 
 To clone the latest PDK version, simply run `make clone-pdk`.
