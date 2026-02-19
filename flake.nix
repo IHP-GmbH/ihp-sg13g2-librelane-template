@@ -49,7 +49,7 @@
           callPackage = lib.callPackageWith pkgs;
         in
         {
-          default = callPackage (pkgs.createLibreLaneShell {
+          default = pkgs.librelane-shell.override ({
             extra-packages = with pkgs; [
               # Utilities
               gnumake
@@ -65,7 +65,7 @@
               surfer
             ];
 
-            extra-python-packages = with pkgs.python3.pkgs; [
+            extra-python-packages = ps: with ps; [
               # Verification
               cocotb
 
@@ -75,7 +75,7 @@
               # For logo generation
               pillow
             ];
-          }) { };
+          });
         }
       );
     };
