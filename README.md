@@ -6,18 +6,15 @@ A LibreLane template to implement a full chip design using the ihp-sg13g2 PDK.
 
 ## Prerequisites
 
-To clone the latest PDK version, simply run `make clone-pdk`.
+First, install LibreLane by following the Nix-based installation instructions: https://librelane.readthedocs.io/en/latest/installation/nix_installation/index.html
 
-In the next step, install LibreLane by following the Nix-based installation instructions: https://librelane.readthedocs.io/en/latest/installation/nix_installation/index.html
+This repository contains a Nix flake that provides a shell with the [`dev`](https://github.com/librelane/librelane/tree/dev) branch of LibreLane.
+To install the PDK, enable a Nix shell using `nix-shell` from the root of this repository and run `make clone-pdk`.
 
 ## Implement the Design
 
-This repository contains a Nix flake that provides a shell with the [`dev`](https://github.com/librelane/librelane/tree/dev) branch of LibreLane.
-
-Simply run `nix-shell` in the root of this repository.
-
 > [!NOTE]
-> Since we are working on a branch of LibreLane, OpenROAD needs to be compiled locally. This will be done automatically by Nix, and the binary will be cached locally. 
+> If you aren't in the Nix shell, run `nix-shell` from the root of this repository.
 
 With this shell enabled, run the implementation:
 
