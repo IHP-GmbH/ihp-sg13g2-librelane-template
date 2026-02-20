@@ -9,11 +9,7 @@
   };
 
   inputs = {
-    #nix-eda.url = "github:fossi-foundation/nix-eda/5.13.0";
-    librelane = {
-      url = "github:librelane/librelane/dev";
-      #inputs.nix-eda.follows = "nix-eda";
-    };
+    librelane.url = "github:librelane/librelane/dev";
   };
 
   outputs =
@@ -53,7 +49,7 @@
           callPackage = lib.callPackageWith pkgs;
         in
         {
-          default = callPackage (pkgs.createLibreLaneShell {
+          default = pkgs.librelane-shell.override ({
             extra-packages = with pkgs; [
               # Utilities
               gnumake
@@ -69,7 +65,7 @@
               surfer
             ];
 
-            extra-python-packages = with pkgs.python3.pkgs; [
+            extra-python-packages = ps: with ps; [
               # Verification
               cocotb
 
@@ -79,7 +75,7 @@
               # For logo generation
               pillow
             ];
-          }) { };
+          });
         }
       );
     };
