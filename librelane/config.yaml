@@ -135,15 +135,12 @@ PAD_BONDPAD_NAME: bondpad_70x70_novias
 
 # Bondpad is not yet included in the PDK
 EXTRA_GDS:
-- dir::../ip/bondpad_70x70/gds/bondpad_70x70.gds
 - dir::../ip/bondpad_70x70_novias/gds/bondpad_70x70_novias.gds
 
 EXTRA_LEFS:
-- dir::../ip/bondpad_70x70/lef/bondpad_70x70.lef
 - dir::../ip/bondpad_70x70_novias/lef/bondpad_70x70_novias.lef
 
 IGNORE_DISCONNECTED_MODULES:
-- bondpad_70x70
 - bondpad_70x70_novias
 
 # Maximum metal width without slotting: 30um
