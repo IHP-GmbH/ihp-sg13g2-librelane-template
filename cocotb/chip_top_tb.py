@@ -92,6 +92,7 @@ def chip_top_runner():
     if gl:
         # SCL models
         sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / f"{scl}.v")
+        sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / f"sg13g2_udp.v")
 
         # We use the unpowered netlist
         sources.append(proj_path / f"../final/nl/{hdl_toplevel}.nl.v")
