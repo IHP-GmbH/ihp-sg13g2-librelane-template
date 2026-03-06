@@ -68,7 +68,6 @@ jobs:
         if: success() || failure()
         run: |
           nix develop --command make librelane-nodrc
-          make copy-final
       - name: Create summary
         if: success() || failure()
         run: |
