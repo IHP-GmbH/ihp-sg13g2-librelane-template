@@ -191,3 +191,12 @@ PDN_MACRO_CONNECTIONS:
 
 # Custom PDN config to connect to SRAMs
 PDN_CFG: dir::pdn_cfg.tcl
+
+MAGIC_GDS_FLATGLOB:
+ # For DRC of SRAM macros
+ - "lvsres_*"
+ - "VIA_M1_*"
+ - "VIA_M2_*"
+ - "*_CELL_CORNER"
+ - "RSC_*"
+ - "*_CELL_SUB"
