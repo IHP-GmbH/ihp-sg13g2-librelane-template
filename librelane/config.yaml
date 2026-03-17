@@ -28,6 +28,11 @@ meta:
     #Netgen.LVS: null
     #Checker.LVS: null
 
+    # Use Magic.Filler instead of KLayout.Filler
+    # This can help in some cases where the target
+    # density cannot be met using KLayout.
+    #KLayout.Filler: Magic.Filler
+
 DESIGN_NAME: chip_top
 VERILOG_FILES:
 - dir::../src/chip_top.sv
