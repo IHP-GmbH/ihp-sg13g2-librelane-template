@@ -2,7 +2,11 @@
 
 A LibreLane template to implement a full chip design using the ihp-sg13g2 PDK.
 
-![IHP template render in OpenROAD GUI](ihp_chip.png)
+<p align="center">
+  <a href="img/chip_top.png">
+    <img src="img/chip_top.png" alt="KLayout chip render" width=45%>
+  </a>
+</p>
 
 ## Prerequisites
 
