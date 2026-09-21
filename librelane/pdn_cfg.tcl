@@ -195,6 +195,8 @@ add_pdn_connect \
 
 # SRAM macros
 
+if {$::env(PDK) == "ihp-sg13g2"} {
+
 define_pdn_grid \
     -macro \
     -instances "\
@@ -229,3 +231,29 @@ define_pdn_grid \
 add_pdn_connect \
     -grid sram_WE \
     -layers "Metal4 TopMetal1"
+
+} else {
+
+define_pdn_grid \
+    -macro \
+    -instances "\
+    i_chip_core.sram_0" \
+    -name sram_NS \
+    -starts_with POWER
+
+add_pdn_connect \
+    -grid sram_NS \
+    -layers "Metal4 TopMetal1"
+
+define_pdn_grid \
+    -macro \
+    -instances "\
+    i_chip_core.sram_1" \
+    -name sram_WE \
+    -starts_with POWER
+
+add_pdn_connect \
+    -grid sram_WE \
+    -layers "Metal4 TopMetal1"
+
+}

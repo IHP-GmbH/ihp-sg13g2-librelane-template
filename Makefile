@@ -5,12 +5,12 @@ TOP = chip_top
 
 PDK_ROOT ?= $(MAKEFILE_DIR)/IHP-Open-PDK
 PDK ?= ihp-sg13g2
-PDK_COMMIT ?= 3b5a704ba6738aa686b08706187830e6284d2a10
+PDK_COMMIT ?= 22f43352dd8219f9007eb659e422e0d5fe28c5fb
 
 .DEFAULT_GOAL := help
 
 $(PDK_ROOT)/$(PDK):
-	ciel enable $(PDK_COMMIT) --pdk-root $(PDK_ROOT) --pdk-family $(PDK)
+	ciel enable $(PDK_COMMIT) --pdk-root $(PDK_ROOT) --pdk-family ihp-sg13
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'

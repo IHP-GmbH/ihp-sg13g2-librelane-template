@@ -140,13 +140,25 @@ PAD_BONDPAD_NAME: bondpad_70x70_novias
 
 # Bondpad is not yet included in the PDK
 EXTRA_GDS:
-- dir::../ip/bondpad_70x70_novias/gds/bondpad_70x70_novias.gds
+- dir::../ip/sg13g2_bondpad_70x70_novias/gds/bondpad_70x70_novias.gds
+#- dir::../ip/sg13cmos5l_bondpad_70x70_novias/gds/bondpad_70x70_novias.gds
 
 EXTRA_LEFS:
-- dir::../ip/bondpad_70x70_novias/lef/bondpad_70x70_novias.lef
+- dir::../ip/sg13g2_bondpad_70x70_novias/lef/bondpad_70x70_novias.lef
+#- dir::../ip/sg13cmos5l_bondpad_70x70_novias/lef/bondpad_70x70_novias.lef
 
 IGNORE_DISCONNECTED_MODULES:
 - bondpad_70x70_novias
+
+# Power Distribution Network
+
+# Custom PDN config to connect to SRAMs
+PDN_CFG: dir::pdn_cfg.tcl
+
+# Match/overlap the SRAM PDN
+PDN_HWIDTH: 6
+PDN_HSPACING: 2.0
+PDN_HOFFSET: 14
 
 # Maximum metal width without slotting: 30um
 PDN_CORE_RING_VWIDTH: 15
@@ -186,6 +198,31 @@ MACROS:
         location: [860, 390]
         orientation: E
 
+#MACROS:
+#  RM_IHPSG13_1P_1024x32_c2_bm_bist:
+#    gds:
+#      - pdk_dir::libs.ref/sg13cmos5l_sram/gds/RM_IHPSG13_1P_1024x32_c2_bm_bist.gds
+#    lef:
+#      - pdk_dir::libs.ref/sg13cmos5l_sram/lef/RM_IHPSG13_1P_1024x32_c2_bm_bist.lef
+#    vh:
+#      - pdk_dir::libs.ref/sg13cmos5l_sram/verilog/RM_IHPSG13_1P_1024x32_c2_bm_bist.v
+#      - pdk_dir::libs.ref/sg13cmos5l_sram/verilog/RM_IHPSG13_1P_core_behavioral_bm_bist.v
+#    lib:
+#      "*_typ_1p20V_25C":
+#        - pdk_dir::libs.ref/sg13cmos5l_sram/lib/RM_IHPSG13_1P_1024x32_c2_bm_bist_typ_1p20V_25C.lib
+#      "*_fast_1p32V_m40C":
+#        - pdk_dir::libs.ref/sg13cmos5l_sram/lib/RM_IHPSG13_1P_1024x32_c2_bm_bist_fast_1p32V_m55C.lib
+#      "*_slow_1p08V_125C":
+#        - pdk_dir::libs.ref/sg13cmos5l_sram/lib/RM_IHPSG13_1P_1024x32_c2_bm_bist_slow_1p08V_125C.lib
+#    instances:
+#      # Make sure to specify the SRAMs in pdn_cfg.tcl
+#      i_chip_core.sram_0:
+#        location: [390, 390]
+#        orientation: N
+#      i_chip_core.sram_1:
+#        location: [860, expr::((390 - 3.88) + 1.16)]
+#        orientation: E
+
 # This is an alternative method compared to
 # specifying the power connections in the RTL
 PDN_MACRO_CONNECTIONS:
@@ -193,9 +230,6 @@ PDN_MACRO_CONNECTIONS:
 - "i_chip_core.sram_0 VDD VSS VDD! VSS!"
 - "i_chip_core.sram_1 VDD VSS VDDARRAY! VSS!"
 - "i_chip_core.sram_1 VDD VSS VDD! VSS!"
-
-# Custom PDN config to connect to SRAMs
-PDN_CFG: dir::pdn_cfg.tcl
 
 MAGIC_GDS_FLATGLOB:
  # For DRC of SRAM macros

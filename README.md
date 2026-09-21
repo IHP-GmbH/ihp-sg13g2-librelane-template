@@ -1,6 +1,7 @@
-# ihp-sg13g2 LibreLane Template
+# ihp-sg13 LibreLane Template
 
-A LibreLane template to implement a full chip design using the ihp-sg13g2 PDK.
+A LibreLane template to implement a full-chip design using the ihp-sg13 PDK.
+It supports both the ihp-sg13g2 and ihp-sg13cmos5l PDK variants.
 
 <p align="center">
   <a href="img/chip_top.png">
@@ -25,6 +26,14 @@ With this shell enabled, run the implementation:
 ```
 make librelane
 ```
+
+> [!NOTE]
+> By default, this implements the design for the ihp-sg13g2 PDK variant.
+> If you would like to implement the design for ihp-sg13cmos5l, a few changes have to be made:
+> 
+> - Export the PDK variable: `export PDK=ihp-sg13cmos5l` (or run `PDK=ihp-sg13cmos5l make librelane`)
+> - `config.yaml`: `EXTRA_GDS` and `EXTRA_LEFS` must use `sg13cmos5l_bondpad_70x70_novias`
+> - `config.yaml`: comment/uncomment the `MACROS` section for ihp-sg13cmos5l
 
 ## View the Design
 
@@ -60,6 +69,10 @@ The testbench is located in `cocotb/chip_top_tb.py`. To run the RTL simulation, 
 ```
 make sim
 ```
+
+> [!NOTE]
+> By default, this simulates the design for the ihp-sg13g2 PDK variant.
+> To simulate for ihp-sg13cmos5l, export the PDK variable: `export PDK=ihp-sg13cmos5l` (or run `PDK=ihp-sg13cmos5l make sim`)
 
 To run the GL (gate-level) simulation, run the following command:
 
