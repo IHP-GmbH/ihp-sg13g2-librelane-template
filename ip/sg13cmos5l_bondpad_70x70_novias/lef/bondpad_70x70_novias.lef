@@ -1,9 +1,9 @@
 VERSION 5.8 ;
 
-MACRO bondpad_70x70
+MACRO bondpad_70x70_novias
   CLASS COVER ;
   ORIGIN 0 0 ;
-  FOREIGN bondpad_70x70 0 0 ;
+  FOREIGN bondpad_70x70_novias 0 0 ;
   SIZE 70.0 BY 70.0 ;
   SYMMETRY X Y R90 ;
   SITE sg13g2_ioSite ;
@@ -16,11 +16,7 @@ MACRO bondpad_70x70
         RECT 0 0 70.0 70.0 ;
       LAYER Metal4 ;
         RECT 0 0 70.0 70.0 ;
-      LAYER Metal5 ;
-        RECT 0 0 70.0 70.0 ;
       LAYER TopMetal1 ;
-        RECT 0 0 70.0 70.0 ;
-      LAYER TopMetal2 ;
         RECT 0 0 70.0 70.0 ;
     END
   END pad
@@ -34,11 +30,7 @@ MACRO bondpad_70x70
       RECT 0 0 70.0 70.0 ;
     LAYER Metal4 ;
       RECT 0 0 70.0 70.0 ;
-    LAYER Metal5 ;
-      RECT 0 0 70.0 70.0 ;
     LAYER TopMetal1 ;
       RECT 0 0 70.0 70.0 ;
-    LAYER TopMetal2 ;
-      RECT 0 0 70.0 70.0 ;
   END
-END bondpad_70x70
+END bondpad_70x70_novias

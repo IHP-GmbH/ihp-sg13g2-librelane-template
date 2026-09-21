@@ -3,6 +3,30 @@
 
 `default_nettype none
 
+`ifdef PAD_sg13g2_io
+
+`define sg13_IOPadIOVdd sg13g2_IOPadIOVdd
+`define sg13_IOPadIOVss sg13g2_IOPadIOVss
+`define sg13_IOPadVdd sg13g2_IOPadVdd
+`define sg13_IOPadVss sg13g2_IOPadVss
+`define sg13_IOPadIn sg13g2_IOPadIn
+`define sg13_IOPadOut30mA sg13g2_IOPadOut30mA
+`define sg13_IOPadInOut30mA sg13g2_IOPadInOut30mA
+`define sg13_IOPadAnalog sg13g2_IOPadAnalog
+
+`elsif PAD_sg13cmos5l_io
+
+`define sg13_IOPadIOVdd sg13cmos5l_IOPadIOVdd
+`define sg13_IOPadIOVss sg13cmos5l_IOPadIOVss
+`define sg13_IOPadVdd sg13cmos5l_IOPadVdd
+`define sg13_IOPadVss sg13cmos5l_IOPadVss
+`define sg13_IOPadIn sg13cmos5l_IOPadIn
+`define sg13_IOPadOut30mA sg13cmos5l_IOPadOut30mA
+`define sg13_IOPadInOut30mA sg13cmos5l_IOPadInOut30mA
+`define sg13_IOPadAnalog sg13cmos5l_IOPadAnalog
+
+`endif
+
 module chip_top #(
     // Power/ground pads for core
     parameter NUM_VDD_PADS = 1,
@@ -45,7 +69,7 @@ module chip_top #(
     generate
     for (genvar i=0; i<NUM_IOVDD_PADS; i++) begin : iovdd_pads
         (* keep *)
-        sg13g2_IOPadIOVdd iovdd_pad  (
+        `sg13_IOPadIOVdd iovdd_pad  (
             `ifdef USE_POWER_PINS
             .iovdd  (IOVDD),
             .iovss  (IOVSS),
@@ -56,7 +80,7 @@ module chip_top #(
     end
     for (genvar i=0; i<NUM_IOVSS_PADS; i++) begin : iovss_pads
         (* keep *)
-        sg13g2_IOPadIOVss iovss_pad  (
+        `sg13_IOPadIOVss iovss_pad  (
             `ifdef USE_POWER_PINS
             .iovdd  (IOVDD),
             .iovss  (IOVSS),
@@ -67,7 +91,7 @@ module chip_top #(
     end
     for (genvar i=0; i<NUM_VDD_PADS; i++) begin : vdd_pads
         (* keep *)
-        sg13g2_IOPadVdd vdd_pad  (
+        `sg13_IOPadVdd vdd_pad  (
             `ifdef USE_POWER_PINS
             .iovdd  (IOVDD),
             .iovss  (IOVSS),
@@ -78,7 +102,7 @@ module chip_top #(
     end
     for (genvar i=0; i<NUM_VSS_PADS; i++) begin : vss_pads
         (* keep *)
-        sg13g2_IOPadVss vss_pad  (
+        `sg13_IOPadVss vss_pad  (
             `ifdef USE_POWER_PINS
             .iovdd  (IOVDD),
             .iovss  (IOVSS),
@@ -92,7 +116,7 @@ module chip_top #(
     // Signal IO pad instances
 
     // Schmitt trigger
-    sg13g2_IOPadIn clk_pad (
+    `sg13_IOPadIn clk_pad (
         `ifdef USE_POWER_PINS
         .iovdd  (IOVDD),
         .iovss  (IOVSS),
@@ -104,7 +128,7 @@ module chip_top #(
     );
     
     // Normal input
-    sg13g2_IOPadIn rst_n_pad (
+    `sg13_IOPadIn rst_n_pad (
         `ifdef USE_POWER_PINS
         .iovdd  (IOVDD),
         .iovss  (IOVSS),
@@ -117,7 +141,7 @@ module chip_top #(
 
     generate
     for (genvar i=0; i<NUM_INPUT_PADS; i++) begin : inputs
-        sg13g2_IOPadIn input_pad (
+        `sg13_IOPadIn input_pad (
             `ifdef USE_POWER_PINS
             .iovdd  (IOVDD),
             .iovss  (IOVSS),
@@ -132,7 +156,7 @@ module chip_top #(
 
     generate
     for (genvar i=0; i<NUM_OUTPUT_PADS; i++) begin : outputs
-        sg13g2_IOPadOut30mA output_pad (
+        `sg13_IOPadOut30mA output_pad (
             `ifdef USE_POWER_PINS
             .iovdd  (IOVDD),
             .iovss  (IOVSS),
@@ -147,7 +171,7 @@ module chip_top #(
 
     generate
     for (genvar i=0; i<NUM_BIDIR_PADS; i++) begin : bidirs
-        sg13g2_IOPadInOut30mA bidir_pad (
+        `sg13_IOPadInOut30mA bidir_pad (
             `ifdef USE_POWER_PINS
             .iovdd  (IOVDD),
             .iovss  (IOVSS),
@@ -165,7 +189,7 @@ module chip_top #(
     generate
     for (genvar i=0; i<NUM_ANALOG_PADS; i++) begin : analogs
         (* keep *)
-        sg13g2_IOPadAnalog analog_pad (
+        `sg13_IOPadAnalog analog_pad (
             `ifdef USE_POWER_PINS
             .iovdd  (IOVDD),
             .iovss  (IOVSS),

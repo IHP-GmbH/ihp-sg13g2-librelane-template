@@ -14,7 +14,6 @@ from cocotb_tools.runner import get_runner
 sim = os.getenv("SIM", "icarus")
 pdk_root = os.getenv("PDK_ROOT", Path("~/.ciel").expanduser())
 pdk = os.getenv("PDK", "ihp-sg13g2")
-scl = os.getenv("SCL", "sg13g2_stdcell")
 gl = os.getenv("GL", False)
 
 hdl_toplevel = "chip_top"
@@ -89,10 +88,14 @@ def chip_top_runner():
     defines = {}
     includes = []
 
+    pdk_without_prefix = pdk.replace("ihp-", "")
+    scl = os.getenv("SCL", f"{pdk_without_prefix}_stdcell")
+    defines[f"PAD_{pdk_without_prefix}_io"] = True
+
     if gl:
         # SCL models
         sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / f"{scl}.v")
-        sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / f"sg13g2_udp.v")
+        sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / f"{pdk_without_prefix}_udp.v")
 
         # We use the unpowered netlist
         sources.append(proj_path / f"../final/nl/{hdl_toplevel}.nl.v")
@@ -104,15 +107,14 @@ def chip_top_runner():
 
     sources += [
         # IO pad models
-        Path(pdk_root) / pdk / "libs.ref/sg13g2_io/verilog/sg13g2_io.v",
+        Path(pdk_root) / pdk / f"libs.ref/{pdk_without_prefix}_io/verilog/{pdk_without_prefix}_io.v",
         
         # Bondpads
-        proj_path / "../ip/bondpad_70x70/vh/bondpad_70x70.v",
-        proj_path / "../ip/bondpad_70x70_novias/vh/bondpad_70x70_novias.v",
+        proj_path / f"../ip/{pdk_without_prefix}_bondpad_70x70_novias/vh/bondpad_70x70_novias.v",
         
         # SRAM models
-        Path(pdk_root) / pdk / "libs.ref/sg13g2_sram/verilog/RM_IHPSG13_1P_1024x32_c2_bm_bist.v",
-        Path(pdk_root) / pdk / "libs.ref/sg13g2_sram/verilog/RM_IHPSG13_1P_core_behavioral_bm_bist.v",
+        Path(pdk_root) / pdk / f"libs.ref/{pdk_without_prefix}_sram/verilog/RM_IHPSG13_1P_1024x32_c2_bm_bist.v",
+        Path(pdk_root) / pdk / f"libs.ref/{pdk_without_prefix}_sram/verilog/RM_IHPSG13_1P_core_behavioral_bm_bist.v",
     ]
 
     build_args = []
